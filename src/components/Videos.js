@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Videos = ({videos}) => {
+const Videos = ({videos,direction}) => {
   return (
     <div
-    className='flex
+    className={`flex
     flex-wrap
     justify-around
-    
-    '
+    ${direction &&
+    'flex-col'
+    }
+    `}
     >
 
         {videos.map((items)=>{
