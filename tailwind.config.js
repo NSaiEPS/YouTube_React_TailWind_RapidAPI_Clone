@@ -11,9 +11,11 @@ module.exports = {
         primaryBlackOpcity: 'rgba(0,0,0,0.5)',
         primaryBlue: "#070124",
         primaryWhite: "#ffffff",
+        primaryRed: "#FF0000",
         secondary: "#00f6ff",
         dimWhite: "rgba(255, 255, 255, 0.7)",
         dimBlue: "rgba(9, 151, 124, 0.1)",
+        dimBlack: "#1e1e1e",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
