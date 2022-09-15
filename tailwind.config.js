@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       colors: {
         primaryBlack: "#00040f",
+        primaryBlackOpcity: 'rgba(0,0,0,0.5)',
         primaryBlue: "#070124",
         primaryWhite: "#ffffff",
         secondary: "#00f6ff",
