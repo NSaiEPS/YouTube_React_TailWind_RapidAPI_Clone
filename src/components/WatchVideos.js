@@ -27,14 +27,18 @@ const WatchVideos = () => {
     >
         {/* {id} */}
         <div
-        
+        className='
+       border
+       w-[70%]
+
+        '
         >
     <ReactPlayer 
     url={`www.youtube.com/watch?v=${id}`}
 
     controls
     className='
-       w-[70%]'
+       '
     />
     </div>
   <div

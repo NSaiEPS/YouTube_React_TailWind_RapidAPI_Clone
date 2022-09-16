@@ -5,6 +5,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { Avatar } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
+import { Languages } from './Languages';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 
 const Header = ({setsidebarOpen}) => {
@@ -16,6 +18,16 @@ const Header = ({setsidebarOpen}) => {
     mic:'',
     micOpen:false
   })
+
+
+  let {
+    transcript,
+    interimTranscript,
+    finalTranscript,
+    resetTranscript,
+    listening,
+  } = useSpeechRecognition();
+
 
   let handleSubmit=(e)=>{
     e.preventDefault()
@@ -54,6 +66,73 @@ const Header = ({setsidebarOpen}) => {
       micOpen:!micsituation
 
     })
+
+    if(!input.micOpen){
+      SpeechRecognition.stopListening()
+    resetTranscript()
+
+  setLanguage({
+    ...language,
+    code: 'en',
+    name: 'english'
+  })
+
+    }
+  }
+
+  // let [micopen, setMicopen] = useState(true)
+
+ 
+
+  let [language, setLanguage] = useState(
+    {
+      code: 'en',
+      name: 'english'
+    })
+
+if(input.micOpen){
+  SpeechRecognition.startListening({
+    continuous: true,
+    language: language.code,
+  })
+
+}
+
+
+
+  let handleLanguage=(e)=>{
+    // console.log(e.target.value)
+    let targeted = (e.target.value)
+    // console.log(targeted.split(' '))
+    let targetteddata = targeted.split(' ');
+    // console.log(targetteddata);
+    setLanguage({
+      ...language,
+      code: targetteddata[1],
+      name: targetteddata[0]
+    })
+
+  }
+
+  let handleMicSearch=()=>{
+    setinput({
+      ...input,
+      text:transcript,
+      micOpen:false
+
+    })
+    setLanguage({
+      ...language,
+      code: 'en',
+      name: 'english'
+    })
+    navigate(`/search/${transcript}`)
+
+    SpeechRecognition.stopListening()
+    resetTranscript()
+
+  
+
   }
   return (
     <div
@@ -114,6 +193,7 @@ const Header = ({setsidebarOpen}) => {
       p-[7px] 
       text-black
       outline-none
+      pr-[30px]
       
       '
       name='text'
@@ -224,28 +304,170 @@ const Header = ({setsidebarOpen}) => {
    left-[0px]
    bg-primaryBlackOpcity
    w-[100%]
-   h-[96vh]
+   h-[100vh]
    z-20
    
 
    
    '
-   onClick={handleMic}
+  //  onClick={handleMic}
 
    >
 
     <div
     className='bg-primaryWhite
     text-black
-    w-[600px]
+    w-[700px]
     h-[400px]
     m-auto
     mt-[20px]
-
+    max-w-[90%]
+     relative
+     top-[50px]
     '
     >
-    Mic Open
+    <div
+    className='
+    w-[90%]
+    m-auto
+    pt-[10px]
+    '
+    
+    >
+      <div>
+        <div
+        className='flex
+        pt-[15px]
+        '
+        >
+          <span>
+          Search with your voice in
+          </span>
+          <h1
+          className='pl-[5px]'
+          >
+            
+            {/* {Languages.map((item,index)=>(
+              <select
+              key={index}
+              name={item}
+              onClick={
+                ()=>{
+                  handleLanguage(item)
+                }
+              }
+              >
+                <option>
+                {item}
 
+              </option>
+              </select>
+
+            ))} */}
+
+<select onChange={handleLanguage}>
+                <option>English en</option>
+                <option>Hindi hi</option>
+                <option>Telugu te</option>
+
+                <option>Tamil ta</option>
+                <option>Kannada kn</option>
+              </select>
+
+            
+            </h1>
+       
+
+        </div>
+        <h1
+        
+        className='
+        pt-[15px]
+        '>To search by voice, go to your browser settings and allow access to microphone</h1>
+        </div>
+
+
+        <div
+        className='flex
+        justify-around
+        mt-[15px]
+        
+        min-h-[200px]
+        '
+        >
+          <div
+          className='flex
+          flex-col
+        
+        w-[65%]
+
+          '
+          >
+            <span>Listening... Try speacking in {language.name}</span>
+           
+           <span
+           className='mt-[5px]'
+           >
+          <b>{transcript}</b> 
+           </span>
+           
+            </div>
+            <div
+            className='w-[35%]'
+            >
+             
+             <img 
+             src='https://mir-s3-cdn-cf.behance.net/project_modules/max_632/0f4eed26719057.5635a060dc9e1.gif'
+             alt='mic png'
+             />
+            </div>
+
+           
+          </div>
+      </div>
+
+      <div
+      className='absolute
+      right-[10px]
+      top-[5px]
+      cursor-pointer
+      '
+   onClick={handleMic}
+      >
+      <ClearIcon/>
+
+        </div>
+
+        <div
+        className='
+        flex
+        justify-center
+        mt-[10px]
+        '
+        >
+
+        {
+            transcript &&
+
+            <button
+            onClick={handleMicSearch}
+ 
+            className='
+            
+            text-white
+            w-[85px]
+            p-[7px]
+            hover:bg-primaryRed
+            bg-primaryBlue
+            duration-1000
+            rounded-[5px]
+            '
+
+            >Search</button>
+
+            }
+
+            </div>
 
       </div>
    </div>
