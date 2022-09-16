@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { Avatar } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+
 
 const Header = ({setsidebarOpen}) => {
 
@@ -27,6 +29,7 @@ const Header = ({setsidebarOpen}) => {
     //   ...input,
     //   text:''
     //  } )
+    window.scrollTo(0,0)
     
     }
      else {
@@ -60,6 +63,7 @@ const Header = ({setsidebarOpen}) => {
         py-[20px] items-center
         sticky
         top-[0px]
+        z-[1]
         `
     }
     >
@@ -96,6 +100,7 @@ const Header = ({setsidebarOpen}) => {
     max-w-[95%]
     flex
     items-center
+    relative
     ' 
     onSubmit={handleSubmit}
     >
@@ -117,6 +122,26 @@ const Header = ({setsidebarOpen}) => {
         handleChange(e)
       }}
       />
+      {
+        input.text &&
+      
+      <span
+      className='absolute
+      top-[5px]
+      text-black
+      right-[55px]
+      cursor-pointer
+      '
+      onClick={()=>{
+        setinput({
+          ...input,
+        text:''
+        })
+      }}
+      >
+      <ClearIcon/>
+      </span>
+}
       <span
       className='
       justify-center
@@ -198,8 +223,10 @@ const Header = ({setsidebarOpen}) => {
    top-[0px]
    left-[0px]
    bg-primaryBlackOpcity
-   w-[100vw]
-   h-[100vh]
+   w-[100%]
+   h-[96vh]
+   z-20
+   
 
    
    '
@@ -214,6 +241,7 @@ const Header = ({setsidebarOpen}) => {
     h-[400px]
     m-auto
     mt-[20px]
+
     '
     >
     Mic Open

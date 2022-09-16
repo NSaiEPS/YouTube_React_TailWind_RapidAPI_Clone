@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import './App.css';
+import ChannelVideos from './components/ChannelVideos';
 import FirstPage from './components/FirstPage';
 import Header from './components/Header';
 import MoreInfoTop from './components/MoreInfoTop';
@@ -40,7 +41,7 @@ function App() {
         <Route path='/' element={<FirstPage/>}/>
         <Route path='/search/:name' element={<SearchedVideos/>}/>
         <Route path='/watch/:id' element={<WatchVideos/>}/>
-        {/* <Route path='/channel/:id' element={<SearchedVideos/>}/> */}
+        <Route path='/channel/:id' element={<ChannelVideos/>}/>
 
        
 

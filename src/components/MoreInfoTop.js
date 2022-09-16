@@ -20,10 +20,18 @@ const MoreInfoTop = () => {
             payload:name
         })
 
+        window.scrollTo(0,0)
+
 
     }
   return (
+    <div
+    className='bg-white
+    sticky
+    top-[80px]
     
+    '
+    >
 <div
     
     className='overflow-x-scroll
@@ -32,6 +40,8 @@ const MoreInfoTop = () => {
     mt-[10px]
     hidden
     ss:flex
+    pt-[10px]
+    
 
 
     '
@@ -39,7 +49,8 @@ const MoreInfoTop = () => {
   {categories.map((items,index)=>(
     <div key={index}
     className={`flex
-    ml-[25px]
+    ${index!==0 && ' ml-[25px]'}
+   
     cursor-pointer
     justify-center
     bg-primaryBlack
@@ -74,6 +85,7 @@ const MoreInfoTop = () => {
 
       </div>
   ))}
+</div>
 </div>
   )
 }

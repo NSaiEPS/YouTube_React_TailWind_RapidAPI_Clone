@@ -15,6 +15,8 @@ const WatchVideos = () => {
         fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`)
           .then((data) => setVideos(data.items))
       }, [id]);
+
+      console.log(videoDetail)
   return (
     <div
     className='bg-primaryBlack
@@ -24,21 +26,30 @@ const WatchVideos = () => {
     '
     >
         {/* {id} */}
+        <div
+        
+        >
     <ReactPlayer 
     url={`www.youtube.com/watch?v=${id}`}
 
     controls
+    className='
+       w-[70%]'
     />
+    </div>
   <div
   className='
   h-[95vh]
   overflow-y-scroll
+  w-[30%]
   '
   >
+
 
     <Videos
     videos={videos}
     direction='column'
+    noScale={true}
     />
   </div>
 

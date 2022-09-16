@@ -20,6 +20,10 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
+       transitionDuration: {
+        '0': '0ms',
+        '2000': '2000ms',
+      }
     },
     screens: {
       xs: "480px",

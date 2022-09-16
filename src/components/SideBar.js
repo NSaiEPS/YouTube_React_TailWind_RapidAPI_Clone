@@ -2,9 +2,11 @@ import React from 'react'
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import { categories } from './Constants';
 import {useDispatch,useSelector} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
 
 const SideBar = ({setsidebarOpen}) => {
+  let navigate=useNavigate()
 
   const dispatch=useDispatch()
 
@@ -18,6 +20,11 @@ const SideBar = ({setsidebarOpen}) => {
           type:'selectCategoryAction',
           payload:name
       })
+
+      navigate('/')
+      setsidebarOpen(false)
+      window.scrollTo(0,0)
+
 
 
   }
