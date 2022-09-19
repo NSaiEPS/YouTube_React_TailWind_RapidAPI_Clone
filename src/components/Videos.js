@@ -43,7 +43,7 @@ const Videos = ({videos,direction,noScale}) => {
             
             >
 
-<VideoCard  
+{/* <VideoCard  
 noScale={noScale}
 channelId={items?.id?.channelId}
 Chthumurl={items?.snippet?.thumbnails?.medium?.url}
@@ -54,10 +54,10 @@ Vdthumurl={items?.snippet?.thumbnails?.medium?.url}
 Vdtitle={(items?.snippet?.title.slice(0,75))}
 VdchannelId={items?.snippet?.channelId}
 VChtitle={ items?.snippet?.channelTitle}
-/>
+/> */}
 
 
-{/* 
+ 
               {
                 items?.id?.channelId ?
 
@@ -165,7 +165,7 @@ VChtitle={ items?.snippet?.channelTitle}
                                      
                                  </span>
                     </div>
-                    </Link>} */}
+                    </Link>}
                 </div>
         )})}
     </div>

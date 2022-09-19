@@ -8,6 +8,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Languages } from './Languages';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import HistoryIcon from '@mui/icons-material/History';
 
 const Header = ({setsidebarOpen}) => {
 
@@ -340,14 +341,17 @@ if(input.micOpen){
         setMorelog(!moreLog)
       }}
       >Logout</span>
-
-      <span
+    
+    <Link
+    to={`/history/123`}
+    >
+      <HistoryIcon/> <span
       className='cursor-pointer'
       
       onClick={()=>{
         setMorelog(!moreLog)
       }}
-      >Login with anothe account</span>
+      >History</span></Link>
     </div>}
    </div>
 

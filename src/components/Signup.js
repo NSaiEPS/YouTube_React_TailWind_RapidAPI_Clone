@@ -1,15 +1,45 @@
 import React, { useState } from 'react'
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { auth } from '../Firebase';
+import { updateProfile } from 'firebase/auth';
+
 
 const Signup = () => {
     const [input, setInput] = useState({
         name:'',
         email:'',
         password:'',
-        type:'signUp'
+        type:'signUp',
+        showPassword:false
       })
         let handleFormSubmit=(e)=>{
         e.preventDefault()
+        alert(`submitted the ${input.name}  ${input.email} `)
+        if(input.type==='signUp'){
+        auth.createUserWithEmailAndPassword(input.email,input.password).then((userAuth)=>{
+            userAuth.user.updateProfile({
+              displayName:input.name,
+              
+            })
+            setInput({
+                ...input,
+                name:'',
+                email:'',
+                password:''
+    
+            })
+        
+        })
+         .catch(error=>alert(error))
+         
         }
+    
+
+        else {
+            
+        }
+    }
 
         let handleChane=(e)=>{
             let nam=e.target.name
@@ -87,9 +117,13 @@ flex
     <input 
     placeholder='Enter your name'
     className='mt-[5px]
-    p-[7px]
+    p-[10px]
+
+    outline-none
     
     '
+    required
+
     onChange={handleChane}
     name='name'
     value={input.name}
@@ -99,31 +133,90 @@ flex
     placeholder='Enter your email'
     type='email'
     className='mt-[5px]
-    p-[7px]
+    p-[10px]
+
+    outline-none
+
     
     '
+    required
+
     onChange={handleChane}
     name='email'
     value={input.email}
 
     />
-
+<div
+className='relative'
+>
 <input 
     placeholder='Enter your password'
-    type='password'
+    type={
+        input.showPassword ? 'text':'password'
+    }
     className='mt-[5px]
-    p-[7px]
+    p-[10px]
+    outline-none
+    w-[100%]
+
     '
+    required
     onChange={handleChane}
     name='password'
     value={input.password}
 
     />
+
+    {input.password &&
+    
+    <span
+    className='absolute
+    top-[12px]
+    right-[7px]
+    cursor-pointer
+    '
+    >
+        {input.showPassword ?
+    <VisibilityOffIcon
+    onClick={
+        ()=>{
+            let paswordCondition=input.showPassword
+            setInput({
+                ...input,
+                showPassword:!paswordCondition
+            })
+        }
+    }
+    />:
+    
+<VisibilityIcon
+    onClick={
+        ()=>{
+            let paswordCondition=input.showPassword
+            setInput({
+                ...input,
+                showPassword:!paswordCondition
+            })
+        }
+    }
+/>
+
+
+        }
+    </span>
+}
+    </div>
     <button
     type='submit'
     className='border
     mt-[5px]
-  p-[3px]
+  p-[5px]
+  bg-secondary
+  hover:bg-primaryRed
+  duration-1000
+  hover:text-white
+
+
 
     '
     >
@@ -145,8 +238,14 @@ flex
 
   className='border
   mt-[5px]
-  p-[3px]
+  p-[5px]
+  bg-pink
+  hover:bg-primaryRed
+  hover:text-white
+  duration-1000
+
   '
+  type='button'
   >  {input.type!=='signUp' ?
         
         'SignUp':'Login'}</button>

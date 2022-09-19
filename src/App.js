@@ -11,6 +11,7 @@ import SideBar from './components/SideBar';
 import WatchVideos from './components/WatchVideos';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Signup from './components/Signup';
+import UserHistory from './components/UserHistory';
 
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
         <Route path='/search/:name' element={<SearchedVideos/>}/>
         <Route path='/watch/:id' element={<WatchVideos/>}/>
         <Route path='/channel/:id' element={<ChannelVideos/>}/>
+        <Route path='/history/:id' element={<UserHistory/>}/>
 
        
 

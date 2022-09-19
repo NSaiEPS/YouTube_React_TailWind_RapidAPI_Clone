@@ -1,6 +1,7 @@
 const InitialState=({
     selectCategory:'New',
-    name:'dfs'
+    name:'',
+    
 })
 
 export default function actionReducer(state=InitialState, action) {
