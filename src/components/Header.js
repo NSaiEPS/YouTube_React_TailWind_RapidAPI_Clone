@@ -7,7 +7,7 @@ import { Avatar } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Languages } from './Languages';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 const Header = ({setsidebarOpen}) => {
 
@@ -189,17 +189,22 @@ if(input.micOpen){
      </div>
 
 
-   <div  className='flex  ' >
+   <div  className='flex  
+   ' >
     
     <form
     className='
-    mr-[15px]
-    border
+    xs:mr-[15px]
+
     sm:w-[450px]
     max-w-[95%]
     flex
     items-center
     relative
+  p-[7px]
+  xs:p-[0px]
+  xs:border
+
     ' 
     onSubmit={handleSubmit}
 
@@ -251,13 +256,38 @@ if(input.micOpen){
       justify-center
       flex
       ml-[12px]
-    cursor-pointer '
+    cursor-pointer 
+   
+    xs:block
+    hidden
+
+    '
     type='submit'
     onClick={handleSubmit}
       >
       <SearchIcon/>
 
       </span>
+
+      <span
+      className='
+      justify-center
+      flex
+      ml-[12px]
+    cursor-pointer 
+    block
+    xs:hidden
+
+    '
+    onClick={()=>
+      setShowInput(true)
+    }
+      >
+      <SearchIcon/>
+
+      </span>
+
+     
      
     </form>
     <span
@@ -342,12 +372,13 @@ if(input.micOpen){
     className='bg-primaryWhite
     text-black
     w-[700px]
-    h-[400px]
+   min-h-[400px]
     m-auto
     mt-[20px]
     max-w-[90%]
      relative
      top-[50px]
+     pb-[5px]
     '
     >
     <div
@@ -390,12 +421,14 @@ if(input.micOpen){
             ))} */}
 
 <select onChange={handleLanguage}>
-                <option>English en</option>
-                <option>Hindi hi</option>
-                <option>Telugu te</option>
+{Languages.map((item,index)=>(
+               <option
+               key={index}
+               >
+               {item}
 
-                <option>Tamil ta</option>
-                <option>Kannada kn</option>
+             </option>))
+             }
               </select>
 
             
@@ -504,21 +537,44 @@ className='xs:hidden
 absolute
 top-[5px]
 left-[10px]
+bg-primaryBlack
+w-[95%]
+h-[90%]
+m-auto
+flex
+flex-row
+items-center
+justify-around
 '
 >
+  <span
+  className='w-[10%]'
+  >
 
+<KeyboardBackspaceIcon
+     
+      onClick={()=>
+        setShowInput(false)
+      }
+      className='cursor-pointer'
+/></span>
+
+      <span
+  className='w-[90%]
+  relative
+  '
       
+      >
       <input
-      placeholder='Search'
+      placeholder='Search YouTube'
 
       className=' xs:hidden
-      max-w-[90%]
-      
+      w-[100%]
       box-border
       p-[7px] 
       text-black
       outline-none
-      pr-[30px]
+     
       '
       name='text'
       value={input.text}
@@ -530,6 +586,27 @@ left-[10px]
 
       
       />
+      {input.text &&
+
+<ClearIcon
+className='absolute
+right-[5px]
+top-[7px]
+text-primaryBlack
+cursor-pointer
+'
+
+onClick={
+  ()=>setinput({
+    ...input,
+    text:''
+  })
+}
+/>}
+
+
+
+      </span>
 
 
 

@@ -1,7 +1,8 @@
  export const  Languages=[
-  'Telugu te',
+  
    'English en',
    'Hindi hi',
+   'Telugu te',
   'Tamil ta',
   'Kannada kn'
    
