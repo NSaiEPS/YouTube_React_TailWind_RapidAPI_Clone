@@ -9,6 +9,9 @@ import MoreInfoTop from './components/MoreInfoTop';
 import SearchedVideos from './components/SearchedVideos';
 import SideBar from './components/SideBar';
 import WatchVideos from './components/WatchVideos';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import Signup from './components/Signup';
+
 
 function App() {
   // let sidebar=false;
@@ -18,9 +21,11 @@ function App() {
   //   e.preventDefault();
   // });
 
-  
+  let login=false;
+
   return (
     <div className="
+    
    
     "
     id='demo'
@@ -43,6 +48,8 @@ function App() {
    
 
 }
+
+
 
 {
       !navigator.onLine ?
@@ -91,8 +98,12 @@ function App() {
       </Routes>
 }
 
-    </div>
-  );
+{!login &&
+
+  <Signup/>
 }
+
+</div>
+  )}
 
 export default App;
