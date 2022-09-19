@@ -41,8 +41,10 @@ fetchFromAPI(`search?part=snippet&q=${
         '
         >
           <h1
-          className='font-[25px]
+          className='
           text-2xl
+          m-auto
+          p-[4px]
           '
           
           >

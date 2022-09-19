@@ -1,29 +1,25 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import VideoCard from './VideoCard';
+import { fetchFromAPI } from './FetchAPI';
+import { Link } from 'react-router-dom';
 
-const Videos = ({videos,direction,noScale}) => {
+
+const VideoCard = ({noScale, channelId,Chthumurl,Chtitle,reqdate,videoId,Vdthumurl,Vdtitle,VdchannelId,VChtitle}) => {
+  let [channelDetail, setChannelDetail]=useState([])
+  const [videoDetail, setVideoDetail] = useState([]);
+
+  useEffect(()=>{
+    fetchFromAPI(`channels?part=snippet&id=${VdchannelId}`).then((data)=>
+        setChannelDetail(data?.items[0])
+        )
+
+        fetchFromAPI(`videos?part=snippet,statistics&id=${videoId}`)
+        .then((data) => setVideoDetail(data.items[0]))
+    },[videoId])
+
 
   return (
-    <div
-    className={`flex
-    flex-wrap
-    justify-around
-    ${direction &&
-    'flex-col'
-    }
-
-    `}
-    >
-
-        {videos.map((items)=>{
-            let reqdate=(items?.snippet?.publishTime).split('T')[0]
-           console.log(items)
-          
-            
-            return(
-            <div key={items?.snippet?.publishTime}
+    <div 
             className={`border
             h-[275px]
             w-[309px]
@@ -43,26 +39,10 @@ const Videos = ({videos,direction,noScale}) => {
             
             >
 
-<VideoCard  
-noScale={noScale}
-channelId={items?.id?.channelId}
-Chthumurl={items?.snippet?.thumbnails?.medium?.url}
-Chtitle={(items?.snippet?.title.slice(0,50))}
-videoId={items?.id?.videoId}
-reqdate={reqdate}
-Vdthumurl={items?.snippet?.thumbnails?.medium?.url}
-Vdtitle={(items?.snippet?.title.slice(0,75))}
-VdchannelId={items?.snippet?.channelId}
-VChtitle={ items?.snippet?.channelTitle}
-/>
-
-
-{/* 
-              {
-                items?.id?.channelId ?
+              {channelId ?
 
                 <Link
-                to={`/channel/${items?.id?.channelId}`}
+                to={`/channel/${channelId}`}
                 >
 
                   <div
@@ -71,7 +51,7 @@ VChtitle={ items?.snippet?.channelTitle}
                   '
                   >
                  <img 
-                src={items?.snippet?.thumbnails?.medium?.url}
+                src={Chthumurl }
                className='rounded-full
                w-[70%]
                m-auto
@@ -88,7 +68,7 @@ VChtitle={ items?.snippet?.channelTitle}
                         text-dimWhite
                         '
                         >
-                       <span>{(items?.snippet?.title.slice(0,50))}
+                       <span>{Chtitle}
                        
                        </span>   
                        <span>{reqdate}</span>   
@@ -101,14 +81,14 @@ VChtitle={ items?.snippet?.channelTitle}
    
 
               <Link
-              to={`/watch/${items?.id?.videoId}`}
+              to={`/watch/${videoId}`}
               onClick={()=>{
                 window.scrollTo(0,0)
               }}
               >
                <div>
                <img 
-                src={items?.snippet?.thumbnails?.medium?.url}
+                src={Vdthumurl}
                alt='img'
                 
                 />
@@ -119,12 +99,12 @@ VChtitle={ items?.snippet?.channelTitle}
                 flex-col
                 p-[5px]
                 '>
-                 
+                  {/* channel imag    */}
 
                   <span
                   className='text-white'
                   >
-                    {(items?.snippet?.title.slice(0,75))}
+                    {Vdtitle}
                     
                   </span>
 
@@ -133,11 +113,11 @@ VChtitle={ items?.snippet?.channelTitle}
                   
                   >
                     <Link
-                to={`/channel/${items?.snippet?.channelId}`}
+                to={`/channel/${VdchannelId}`}
                 >
                     <span>
                     {
-                    items?.snippet?.channelTitle
+                    VChtitle
                     } 
                     </span> <span
                      className='!font-[2px]
@@ -154,7 +134,12 @@ VChtitle={ items?.snippet?.channelTitle}
                     
                     </span>
                        
-                                 
+                                 {/* no.of views  */}
+
+       
+                                 <span>
+                                 {videoDetail?.statistics?.viewCount} views
+                                 </span>
 
                                  <span
                   className='text-dimWhite'
@@ -165,11 +150,9 @@ VChtitle={ items?.snippet?.channelTitle}
                                      
                                  </span>
                     </div>
-                    </Link>} */}
+                    </Link>}
                 </div>
-        )})}
-    </div>
   )
 }
 
-export default Videos
+export default VideoCard
