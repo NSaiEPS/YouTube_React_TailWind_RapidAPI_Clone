@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { auth } from '../Firebase';
+import { auth, db } from '../Firebase';
 import { updateProfile } from 'firebase/auth';
 
 
@@ -13,9 +13,11 @@ const Signup = () => {
         type:'signUp',
         showPassword:false
       })
-        let handleFormSubmit=(e)=>{
+    
+
+      let handleFormSubmit=(e)=>{
         e.preventDefault()
-        alert(`submitted the ${input.name}  ${input.email} `)
+        // alert(`submitted the ${input.name}  ${input.email} `)
         if(input.type==='signUp'){
         auth.createUserWithEmailAndPassword(input.email,input.password).then((userAuth)=>{
             userAuth.user.updateProfile({
@@ -29,6 +31,13 @@ const Signup = () => {
                 password:''
     
             })
+
+            db.collection('users').add({
+                name:(input.name),
+                email:(input.email)
+            })
+
+
         
         })
          .catch(error=>alert(error))
@@ -37,11 +46,23 @@ const Signup = () => {
     
 
         else {
+            auth.signInWithEmailAndPassword(input.email,input.password).then (userAuth=>{
+                
+                setInput({
+                    ...input,
+                    name:'',
+                    email:'',
+                    password:''
+        
+                })
+              })
+         .catch(error=>alert(error))
             
         }
     }
 
-        let handleChane=(e)=>{
+    
+    let handleChane=(e)=>{
             let nam=e.target.name
             let val=e.target.value
             setInput({
@@ -50,6 +71,7 @@ const Signup = () => {
             })
         }
 
+    
         let handleSigninChange=()=>{
             if(input.type==='signUp'){
                 setInput({
@@ -74,7 +96,7 @@ w-[100%]
 h-[100vh]
 fixed
 top-[0px]
-z-[1]
+z-[3]
 
 
 flex
@@ -90,8 +112,9 @@ rounded-[15px]
 h-[350px]
 ss:w-[60%]
 sm:w-[75%]
-lg:w-[65%]
+lg:w-[55%]
 flex
+flex-col
 
 '
 >
@@ -102,11 +125,25 @@ flex
       lg: "1200px",
       xl: "1700px", */}
 
+      <h1
+      className='
+      m-auto
+      text-white
+      '
+      >Please {input.type==='signUp' ?
+        
+        <span>'SignUp'</span>: 
+        <span>
+        'Login'
+        </span>
+        } to proceed further</h1>
+
   <form
   className='flex
   flex-col
   w-[75%]
   m-auto
+  pb-[20px]
  
   sm:w-[55%]
  

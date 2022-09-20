@@ -8,6 +8,7 @@ const Videos = ({videos,direction,noScale}) => {
   return (
     <div
     className={`flex
+    
     flex-wrap
     justify-around
     ${direction &&
@@ -19,7 +20,7 @@ const Videos = ({videos,direction,noScale}) => {
 
         {videos.map((items)=>{
             let reqdate=(items?.snippet?.publishTime).split('T')[0]
-           console.log(items)
+          //  console.log(items)
           
             
             return(
@@ -124,7 +125,7 @@ VChtitle={ items?.snippet?.channelTitle}
                   <span
                   className='text-white'
                   >
-                    {(items?.snippet?.title.slice(0,75))}
+                    {(items?.snippet?.title.slice(0,65))}
                     
                   </span>
 

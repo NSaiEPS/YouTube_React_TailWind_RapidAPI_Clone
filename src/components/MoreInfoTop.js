@@ -29,6 +29,7 @@ const MoreInfoTop = () => {
     className='bg-white
     sticky
     top-[80px]
+    z-[1]
     
     '
     >

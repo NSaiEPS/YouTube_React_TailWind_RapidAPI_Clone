@@ -9,6 +9,8 @@ import { Languages } from './Languages';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import HistoryIcon from '@mui/icons-material/History';
+import { auth, db } from '../Firebase';
+import { useSelector } from 'react-redux';
 
 const Header = ({setsidebarOpen}) => {
 
@@ -30,8 +32,14 @@ const Header = ({setsidebarOpen}) => {
     listening,
   } = useSpeechRecognition();
 
+let selectUserData=useSelector(state=>state?.info?.usersData)
+// console.log(selectUserData)
+ 
 
-  let handleSubmit=(e)=>{
+let handleSubmit=(e)=>{
+  let date=new Date
+let originalDate=(date.toLocaleString())
+// console.log(originalDate);
     e.preventDefault()
 
     if(input.text){
@@ -43,7 +51,13 @@ const Header = ({setsidebarOpen}) => {
     //   ...input,
     //   text:''
     //  } )
+    let search=input.text;
+    
     window.scrollTo(0,0)
+    db.collection('users').doc(selectUserData?.userid).collection('searchHistory').add({
+      search,
+      originalDate
+    })
     
     }
      else {
@@ -53,13 +67,23 @@ const Header = ({setsidebarOpen}) => {
   }
   let handleInputKeyPress=(e)=>{
     // console.log(e.keyCode===13)
+    let date=new Date
+    let originalDate=(date.toLocaleString())
+   
     if(e.keyCode===13)
     if(input.text){
+    let search=input.text;
+
 
       navigate(`/search/${input.text}`)
   
       
       window.scrollTo(0,0)
+      db.collection('users').doc(selectUserData?.userid).collection('searchHistory').add({
+        search,
+        originalDate
+      })
+     
       
       }
        else {
@@ -135,6 +159,8 @@ if(input.micOpen){
   }
 
   let handleMicSearch=()=>{
+    let date=new Date
+let originalDate=(date.toLocaleString())
     setinput({
       ...input,
       text:transcript,
@@ -147,13 +173,21 @@ if(input.micOpen){
       name: 'english'
     })
     navigate(`/search/${transcript}`)
+    let search=transcript;
 
     SpeechRecognition.stopListening()
     resetTranscript()
 
+    db.collection('users').doc(selectUserData?.userid).collection('searchHistory').add({
+      search,
+      originalDate
+    })
+
   
 
   }
+
+
   return (
     <div
     className={
@@ -162,7 +196,7 @@ if(input.micOpen){
         py-[20px] items-center
         sticky
         top-[0px]
-        z-[1]
+        z-[2]
         `
     }
     >
@@ -339,11 +373,14 @@ if(input.micOpen){
       className='cursor-pointer'
       onClick={()=>{
         setMorelog(!moreLog)
+    auth.signOut()
+
+
       }}
       >Logout</span>
     
     <Link
-    to={`/history/123`}
+    to={`/history/${selectUserData?.userid}`}
     >
       <HistoryIcon/> <span
       className='cursor-pointer'
@@ -363,7 +400,8 @@ if(input.micOpen){
    bg-primaryBlackOpcity
    w-[100%]
    h-[100vh]
-   z-20
+   z-40
+
    
 
    

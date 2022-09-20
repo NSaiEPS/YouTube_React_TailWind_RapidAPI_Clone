@@ -31,10 +31,15 @@ const WatchVideos = () => {
 
       // console.log(videoDetail)
       // console.log(videos);
-      console.log(channelDetail)
+      // console.log(channelDetail)
 
       let reqDate=''
       reqDate= videoDetail?.snippet?.publishedAt?.split('T')
+
+      let handelClick=(e)=>{
+        console.log(e)
+
+      }
   return (
     <div
     className='bg-primaryBlack
@@ -59,6 +64,11 @@ const WatchVideos = () => {
     min-w-[95%]
     bg-primaryRed
        '
+
+      //  onClickPreview={handelClick}
+       onClick={()=>handelClick(id)}
+
+       
     />
     <div 
     className='text-white'
