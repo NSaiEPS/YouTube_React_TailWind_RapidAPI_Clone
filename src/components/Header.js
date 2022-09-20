@@ -352,6 +352,7 @@ let originalDate=(date.toLocaleString())
     onClick={()=>{
       setMorelog(!moreLog)
     }}
+   
     />
 
 
@@ -374,6 +375,8 @@ let originalDate=(date.toLocaleString())
       onClick={()=>{
         setMorelog(!moreLog)
     auth.signOut()
+    navigate('/')
+    window.location.reload()
 
 
       }}

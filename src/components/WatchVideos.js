@@ -4,6 +4,9 @@ import { Link, useParams } from 'react-router-dom'
 import { fetchFromAPI } from './FetchAPI'
 import Videos from './Videos'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { Alarm } from '@mui/icons-material'
+import { db } from '../Firebase'
+import { useSelector } from 'react-redux'
 
 
 const WatchVideos = () => {
@@ -11,6 +14,8 @@ const WatchVideos = () => {
     const [videoDetail, setVideoDetail] = useState([]);
   const [videos, setVideos] = useState([]);
   let [channelDetail, setChannelDetail]=useState([])
+let selectUserData=useSelector(state=>state?.info?.usersData)
+
 
     useEffect(() => {
         fetchFromAPI(`videos?part=snippet,statistics&id=${id}`)
@@ -36,8 +41,13 @@ const WatchVideos = () => {
       let reqDate=''
       reqDate= videoDetail?.snippet?.publishedAt?.split('T')
 
-      let handelClick=(e)=>{
-        console.log(e)
+      let handleStart=()=>{
+        let date=new Date
+        let originalDate=(date.toLocaleString())
+        db.collection('users').doc(selectUserData?.userid).collection('watchHistory').add({
+          watchedVideoid:id,
+          originalDate
+        })
 
       }
   return (
@@ -55,8 +65,14 @@ const WatchVideos = () => {
        w-[70%]
 
         '
+       
+
         >
+          <span
+          
+          >
     <ReactPlayer 
+    onStart={handleStart}
     url={`www.youtube.com/watch?v=${id}`}
 
     controls
@@ -66,10 +82,11 @@ const WatchVideos = () => {
        '
 
       //  onClickPreview={handelClick}
-       onClick={()=>handelClick(id)}
+      
 
        
     />
+    </span>
     <div 
     className='text-white'
     >

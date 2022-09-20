@@ -36,7 +36,7 @@ const SideBar = ({setsidebarOpen}) => {
     h-[100vh]
     text-white
     w-[100%]
-    z-[1]
+    z-[4]
 
 
     '
@@ -45,6 +45,8 @@ const SideBar = ({setsidebarOpen}) => {
     className='
     min-w-[250px]
     bg-primaryBlue
+    pt-[10px]
+    
     
     '
     >
@@ -55,9 +57,15 @@ const SideBar = ({setsidebarOpen}) => {
         }
     }
     className='
-    cursor-pointer'
+    cursor-pointer
+    ml-[25px]
+    '
     />
-Main content
+ <span
+ className='p-[7px]
+ 
+ '
+ >Main content</span>
 
 <div
     
@@ -65,6 +73,8 @@ Main content
     h-[95vh]
     flex
     flex-col
+    mt-[15px]
+    pb-[25px]
     '
 >
   {categories.map((items,index)=>(

@@ -15,6 +15,10 @@ import UserHistory from './components/UserHistory';
 import { auth, db } from './Firebase';
 import Spinner from 'react-spinkit'
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+// import { Avatar } from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 
 
@@ -170,7 +174,7 @@ usersData.map((data)=>
         <Route path='/history/:id' element={<UserHistory/>}/>
 
        
-
+    
       </Routes>
 }
 
@@ -179,6 +183,31 @@ usersData.map((data)=>
   <Signup/>
 }
 
+<ToastContainer
+
+/>
+
+<div
+className='fixed bottom-[10px]
+w-[50px]
+right-[10px]
+'
+>
+<div
+className='bg-primaryBlack
+
+'
+>
+
+  <ArrowUpwardIcon />
+  <ArrowDownwardIcon/>
+
+
+
+
+
+</div>
+</div>
 </div>
   )}
 
