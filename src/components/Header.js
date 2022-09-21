@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,6 +11,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import HistoryIcon from '@mui/icons-material/History';
 import { auth, db } from '../Firebase';
 import { useSelector } from 'react-redux';
+import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 
 const Header = ({setsidebarOpen}) => {
 
@@ -194,8 +195,27 @@ let originalDate=(date.toLocaleString())
 
   }
 
+let [handleSearchHistory,setHandleSearchHistory]=useState(false)
+ 
+// let selectUserData=useSelector(state=>state?.info?.usersData)
+const [searchHistory, setsearchHistory] = useState([])
 
-  return (
+useEffect(()=>{
+
+
+
+db.collection('users').doc(selectUserData?.userid).collection('searchHistory').orderBy('originalDate').onSnapshot((data)=>{
+  setsearchHistory((data.docs.map((item)=>({
+    id:item.id,
+    data:item.data()
+  }))))
+ })
+},[])
+
+
+
+
+return (
     <div
     className={
         `flex flex-row sm:flex-row
@@ -272,6 +292,17 @@ let originalDate=(date.toLocaleString())
       onChange={(e)=>{
         handleChange(e)
       }}
+
+      onFocus={
+        ()=>
+          setHandleSearchHistory(true)
+        }
+
+        onBlur={
+          ()=>
+            setHandleSearchHistory(false)
+          }
+      
       />
       {
         input.text &&
@@ -332,6 +363,43 @@ let originalDate=(date.toLocaleString())
 
       </span>
 
+
+
+{
+  true &&
+
+  <div
+  className='
+  w-[100%]
+  border
+  absolute
+  top-[38px]
+  left-[0px]
+  
+  '
+  
+  >
+    {
+      searchHistory.map((items,index)=>{
+        return(
+         <div
+         key={index}
+         className='bg-primaryBlue
+         
+         '
+         
+         >{
+          items.data.search
+          }
+
+<AutoDeleteIcon/>
+          </div>
+
+        )
+      })
+    }
+  </div>
+}
      
      
     </form>

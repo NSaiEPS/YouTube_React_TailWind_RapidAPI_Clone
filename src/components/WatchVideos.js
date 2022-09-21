@@ -41,18 +41,82 @@ let selectUserData=useSelector(state=>state?.info?.usersData)
       let reqDate=''
       reqDate= videoDetail?.snippet?.publishedAt?.split('T')
 
+const [watchHistory, setwatchHistory] = useState([])
+
+
+
+useEffect(()=>{
+    db.collection('users').doc(selectUserData?.userid).collection('watchHistory').orderBy('originalDate').onSnapshot((data)=>{
+     setwatchHistory((data.docs.map((item)=>({
+       id:item.id,
+       data:item.data()
+     }))))
+    })
+ 
+},[])
+
+
+
+
+
+
+ 
+let watchedList=[]
+let reqwatchId=''
+
+useEffect(()=>{
+  watchHistory.forEach((item)=>{
+    console.log(item.data.watchedVideoid)
+    watchedList.push(item.data.watchedVideoid)
+    if(item.data.watchedVideoid===id){
+      reqwatchId=item.id
+    }
+  })
+
+},[watchHistory])
+
+
+
+// console.log(watchedList,watchHistory,reqwatchId)
+
+
+
       let handleStart=()=>{
+        // watchHistory.forEach((item)=>{
+        //   console.log(item.data.watchedVideoid)
+        //   watchedList.push(item.data.watchedVideoid)
+        //   if(item.data.watchedVideoid===id){
+        //     reqwatchId=item.id
+        //   }
+        // })
+
+
+
         let date=new Date
         let originalDate=(date.toLocaleString())
+
+         if(watchedList.includes(id)){
+          db.collection('users').doc(selectUserData?.userid).collection('watchHistory').doc(reqwatchId).update({
+            originalDate
+          })
+
+         }
+
+         else {
         db.collection('users').doc(selectUserData?.userid).collection('watchHistory').add({
           watchedVideoid:id,
           originalDate
         })
-
+      }
       }
 
 
       console.log(videoDetail)
+
+
+
+
+  
   return (
     <div
     className='bg-primaryBlack
@@ -130,6 +194,15 @@ let selectUserData=useSelector(state=>state?.info?.usersData)
       >
         { reqDate&& reqDate[0]} 
       </span>
+
+      <span
+      className='p-[4px]'
+      
+      >
+         {videoDetail?.statistics?.likeCount} likes
+      </span>
+
+
       <span
       className='text-dimWhite
       p-[10px]

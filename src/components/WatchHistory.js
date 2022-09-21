@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 import ReactPlayer from 'react-player';
 import { db } from '../Firebase';
@@ -9,12 +9,37 @@ import { useSelector } from 'react-redux';
 
 const WatchHistory = ({watchedVideoid,watchId,originalDate}) => {
     const {id}=useParams()
-let selectUserData=useSelector(state=>state?.info?.usersData)
-   
+
+
+
+// const [watchHistory, setwatchHistory] = useState([])
+
+// useEffect(()=>{
+//     db.collection('users').doc(id).collection('watchHistory').orderBy('originalDate').onSnapshot((data)=>{
+//      setwatchHistory((data.docs.map((item)=>({
+//        id:item.id,
+//        data:item.data()
+//      }))))
+//     })
  
+// },[id])
+ 
+// let watchedList=[]
+
+// useEffect(()=>{
+//   watchHistory.map((item)=>{
+//     watchedList.push(item.data.watchedVideoid)
+//   })
+
+// },[watchHistory])
+
+
+
+
+
     let handleDelete=()=>{
         db.collection('users').doc(id).collection('watchHistory').doc(watchId).delete().then((data)=>{
-            toast.success(`Successfully deleted from watch History`, {
+            toast.success(`Successfully deleted watched Video from watch History`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -30,6 +55,8 @@ let selectUserData=useSelector(state=>state?.info?.usersData)
 
         
     }
+   
+    
 
 
 

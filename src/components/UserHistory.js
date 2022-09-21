@@ -1,11 +1,12 @@
 
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
 import { db } from '../Firebase'
 import SearchHistory from './SearchHistory'
 import WatchHistory from './WatchHistory'
 import 'react-toastify/dist/ReactToastify.css';
+import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
+import { tabsListUnstyledClasses } from '@mui/base'
 
 
 const UserHistory = () => {
@@ -34,6 +35,40 @@ const UserHistory = () => {
     },[id])
  
     // console.log(watchHistory,searchHistory)
+       
+   function handleSearchHistory(){
+    let confm=(window.confirm("are you sure to delete all search History!"))
+if (confm) {
+  // alert('deleted')
+
+  db.collection('users').doc(id).collection('searchHistory')
+  .get()
+  .then(res => {
+    res.forEach(element => {
+      element.ref.delete();
+    });
+  });
+} 
+
+   }
+
+
+   function handleWatchHistory(){
+    let confm=(window.confirm("are you sure to delete all Watch History!"))
+if (confm) {
+  db.collection('users').doc(id).collection('watchHistory')
+  .get()
+  .then(res => {
+    res.forEach(element => {
+      element.ref.delete();
+    });
+  });
+} 
+
+   }
+
+
+
 
   return (
     <div
@@ -59,21 +94,51 @@ const UserHistory = () => {
       p-[7px]
       ${history==='search' && 
       'bg-primaryRed'}
+        relative
+
       `}
 
       onClick={()=>{
         setHistory('search')
       }}
-      >SearchHistory</button>
+      >SearchHistory
+      
+      
+      {
+        history==='search' &&
+        searchHistory.length >0
+        &&
 
+        <button
+        className='
+        absolute
+        top-[0px]
+        right-[-35px]
+        p-[7px]
+        text-primaryRed
+        '
+
+        onClick={
+    handleSearchHistory
+
+        }
+        > <AutoDeleteIcon/>
+        </button>
+      }
+
+      </button>
+   
 
       <button
       className={`border
       bg-primaryBlack
       text-white
       p-[7px]
+      relative
       ${history==='watch' && 
       'bg-primaryRed'
+
+      
     
     }
       
@@ -82,11 +147,34 @@ const UserHistory = () => {
         setHistory('watch')
       }}
       
-      >WatchHistory</button>
+      >WatchHistory
+      
+      {
+        history==='watch'&& watchHistory.length>0  &&
+
+        <button
+        className='
+        absolute
+        top-[0px]
+        right-[-35px]
+        p-[7px]
+        text-primaryRed
+        '
+        onClick={handleWatchHistory}
+        > <AutoDeleteIcon/>
+        </button>
+      }
+      
+      </button>
+      
 
      </div>
      <div>
       {history==='search'?
+
+      (searchHistory.length >0 ?
+      
+      
 
       <div
       className='flex
@@ -143,7 +231,35 @@ const UserHistory = () => {
 }
 </div>
         </div>
+        
+        :
+        <div
+        
+        className='
+        bg-primaryBlue
+        text-white
+        w-[250px]
+        m-auto
+        mt-[15px]
+        p-[10px]
+        flex
+        justify-center
+
+
+        '
+        >
+          Empty! NO searchHistory .
+
+          </div>
+        
+        )
      :
+
+
+     (
+      watchHistory.length>0 ?
+
+     
      <div
      className='flex
      flex-col
@@ -183,6 +299,27 @@ watchedVideoid={item.data.watchedVideoid}
 }
       </div>
       </div>
+      :
+
+      <div
+      
+      className='
+      bg-primaryBlue
+      text-white
+      w-[250px]
+      m-auto
+      mt-[15px]
+      p-[10px]
+      flex
+      justify-center
+
+
+      '
+      >
+Empty! NO watchHistory .
+        </div>
+      
+      )
 
       }
 

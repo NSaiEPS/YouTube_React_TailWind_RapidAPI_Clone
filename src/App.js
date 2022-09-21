@@ -97,21 +97,22 @@ usersData.map((data)=>
       }
     }
 
-    console.log(window.innerHeight,
+    // console.log(window.innerHeight,
       
-      document.body.scrollHeight);
+    //   document.body.scrollHeight);
     
 
  if(loading){
   return (
     <div className='
     flex
+    items-center
+    h-[100vh]
     '>
     <div className='
     flex
     flex-col
     m-auto
-    mt-[55px]
     '>
      
       <img className='
