@@ -25,7 +25,10 @@ fetchFromAPI(`search?part=snippet&q=${
 
 // console.log(videos)
   return (
-    <div>
+    <div
+    
+    
+    >
         
         <MoreInfoTop/>
 
@@ -54,7 +57,10 @@ fetchFromAPI(`search?part=snippet&q=${
             {SelectedName} 
             </span> Videos
           </h1> 
-          <div>
+          <div
+          className='overflow-x-hidden'
+          
+          >
 
              
            {

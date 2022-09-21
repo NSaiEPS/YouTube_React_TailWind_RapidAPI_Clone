@@ -19,6 +19,8 @@ import { ToastContainer, toast } from 'react-toastify';
 // import { Avatar } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+// import img from './'
+import img from './No_Internet_Img.png'
 
 
 
@@ -58,8 +60,8 @@ usersData.map((data)=>
       type:'usersDataAction',
       payload:{
         userid:(data.id),
-        userName:(data.data?.email),
-        userEmail:(data.data?.name)
+        userName:(data.data?.name),
+        userEmail:(data.data?.email)
       }
     })
 
@@ -69,7 +71,36 @@ usersData.map((data)=>
 
   
   // if(data?.data?.email===userss?.email){
+    let [arrowState,setArrowState]=useState('down')
+
+    useEffect(()=>{
+      window.addEventListener('scroll',()=>{
+        if(window.scrollY>=150){
+          setArrowState('up')
+        }
+        else {
+          setArrowState('down')
   
+        }
+      })
+  
+    },[])
+
+    let handelGo=(name)=>{
+      if(name==='up'){
+        window.scrollTo(0,0)
+      }
+      if(name==='down'){
+        let len=document.body.scrollHeight
+        // window.outerHeight
+        window.scrollTo(0,len)
+      }
+    }
+
+    console.log(window.innerHeight,
+      
+      document.body.scrollHeight);
+    
 
  if(loading){
   return (
@@ -135,7 +166,8 @@ usersData.map((data)=>
       <div
       className='flex
       items-center
-      h-[100vh]
+      justify-center
+      h-[75vh]
 
       
       '
@@ -143,10 +175,12 @@ usersData.map((data)=>
       <div
       className='w-[300px]
       m-auto
+      flex
+      flex-col
       '
       >
            <img 
-           src='https://cdn160.picsart.com/upscale-270843074002211.png'
+           src={img}
            alt='no interetnet img'
            />
 
@@ -154,11 +188,21 @@ usersData.map((data)=>
            <span>You're offline. Check your connection.</span>
 
            <button
-           className='border-blue-500
+           className='
+           text-blue-700
+           border-blue-600
            border
+           mt-[10px]
+           px-[7px]
+           py-[3px]
+           mx-auto
            
            
            '
+           onClick={()=>
+          
+          window.location.reload()
+          }
            
            >RETRY</button>
         </div>
@@ -187,6 +231,7 @@ usersData.map((data)=>
 
 />
 
+{/* 
 <div
 className='fixed bottom-[10px]
 w-[50px]
@@ -195,19 +240,75 @@ right-[10px]
 >
 <div
 className='bg-primaryBlack
+text-white
+py-[7px]
+
+flex
+items-center
+justify-center
+rounded-full
 
 '
 >
 
-  <ArrowUpwardIcon />
-  <ArrowDownwardIcon/>
+
+  <ArrowDownwardIcon/> */}
+
+  {/* {
+    window.scrollHeight>
+  } */}
+
+  {
+
+window.innerHeight <
+      
+      document.body.scrollHeight
+      &&
+
+  
+
+<div 
+className='fixed bottom-[12px]
+right-[25px]
+text-white
+animate-bounce
+w-[50px]
+h-[50px]
+z-[6]
+bg-white
+rounded-full
+'>
+
+  {
+    arrowState==='down' ?
+  
+<img 
+alt='img'
+src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWTsPJqNEwxav3Do6NwxHF8t6TaSbqTq32FU84m5VH7A&s'
+className='
+rounded-full
+cursor-pointer
+'
+onClick={()=>handelGo('down')}
+/>
+
+:
+
+<img 
+alt='img'
+src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Eo_circle_red_arrow-up.svg/512px-Eo_circle_red_arrow-up.svg.png?20200417173148'
+className='
+rounded-full
+cursor-pointer
+'
+onClick={()=>handelGo('up')}
+
+/>
 
 
+}
+</div>}
 
-
-
-</div>
-</div>
 </div>
   )}
 

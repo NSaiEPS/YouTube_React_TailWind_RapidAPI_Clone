@@ -86,7 +86,9 @@ m-auto
     
 
    
-    <div>
+    <div
+    className='overflow-x-hidden'
+    >
       <Videos
       videos={videos}
       />

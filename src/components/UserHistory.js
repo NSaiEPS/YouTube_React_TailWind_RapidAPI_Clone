@@ -116,7 +116,10 @@ const UserHistory = () => {
 
         <div
         
-        className='w-[33%]'
+        className='w-[33%]
+        flex
+        justify-end
+        '
         >Delete Search</div>
         </div>
         <div

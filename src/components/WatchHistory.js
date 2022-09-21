@@ -4,11 +4,13 @@ import ReactPlayer from 'react-player';
 import { db } from '../Firebase';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const WatchHistory = ({watchedVideoid,watchId,originalDate}) => {
     const {id}=useParams()
-
+let selectUserData=useSelector(state=>state?.info?.usersData)
+   
  
     let handleDelete=()=>{
         db.collection('users').doc(id).collection('watchHistory').doc(watchId).delete().then((data)=>{
@@ -28,6 +30,73 @@ const WatchHistory = ({watchedVideoid,watchId,originalDate}) => {
 
         
     }
+
+
+
+
+    let reqDateCal=()=>{
+        let reqDatepost=originalDate.split('/')[0]
+        let reqMonthpost=originalDate.split('/')[1]
+        let reqYearpost=originalDate.split('/')[2].split(',')[0]
+        let date=new Date()
+        let getReqDate=date.toLocaleDateString().split('/')[0]
+        let getReqMonth=date.toLocaleDateString().split('/')[1]
+        let getReqYear=date.toLocaleDateString().split('/')[2]
+        // console.log(getReqDate - reqDatepost ===1)
+    
+        if(getReqYear===reqYearpost){
+            // Same year
+            if(getReqMonth=== reqMonthpost){
+                // same month
+    
+                if(getReqDate===reqDatepost){
+                    return 'today '
+                }
+    
+                else {
+    
+                    if( getReqDate- reqDatepost ===1 ){
+                        return 'yesterday '
+                    }
+    
+                    else {
+                        return `${getReqDate - reqDatepost} days back`
+                    }
+                }
+            }
+    
+            else {
+                if( getReqMonth- reqMonthpost=== 1) {
+                return 'last month'}
+    
+                else {
+                    return `${getReqMonth- reqMonthpost} months back`
+                }
+            }
+        }
+    
+        else {
+            // Different year
+            if(getReqYear ===reqYearpost -1){
+                return 'a year back'
+            }
+            else return `${getReqYear-reqYearpost } years back`
+        }
+    
+    }    
+
+
+
+    let handleStart=()=>{
+        let date=new Date
+        let originalDate=(date.toLocaleString())
+        db.collection('users').doc(id).collection('watchHistory').doc(watchId).update({
+         
+          originalDate
+        })
+
+      }
+
  
     return (
     <div
@@ -54,6 +123,8 @@ const WatchHistory = ({watchedVideoid,watchId,originalDate}) => {
 
       //  onClickPreview={handelClick}
       
+      onStart={handleStart}
+      width='100%'
 
        
     />
@@ -85,7 +156,10 @@ const WatchHistory = ({watchedVideoid,watchId,originalDate}) => {
     <div
         className='w-[50%]'
     
-    >{originalDate}</div>
+    >
+        
+        {reqDateCal()} at {originalDate.split(',')[1]}
+    </div>
     
     <div
         className='w-[50%]

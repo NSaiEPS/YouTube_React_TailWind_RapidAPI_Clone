@@ -17,6 +17,8 @@ const Header = ({setsidebarOpen}) => {
   let [moreLog,setMorelog]=useState(false)
   let [showInput,setShowInput]=useState(false)
   let navigate=useNavigate()
+// let selectUserData=useSelector(state=>state?.info?.usersData)
+
   const [input, setinput] = useState({
     text:'',
     mic:'',
@@ -120,6 +122,11 @@ let originalDate=(date.toLocaleString())
     code: 'en',
     name: 'english'
   })
+
+  // SpeechRecognition.stopListening()
+  //   resetTranscript()
+
+  
 
     }
   }
@@ -281,6 +288,9 @@ let originalDate=(date.toLocaleString())
           ...input,
         text:''
         })
+
+    
+
       }}
       >
       <ClearIcon/>
@@ -336,7 +346,9 @@ let originalDate=(date.toLocaleString())
     '
     >
     <KeyboardVoiceIcon
-    className='cursor-pointer'
+    className='cursor-pointer
+    text-primaryGreen
+    '
     onClick={handleMic}
     />
 
@@ -344,16 +356,36 @@ let originalDate=(date.toLocaleString())
 
    </div>
    <div
-   className='relative'
+   className='relative
+  
+   '
    >
 
-    <Avatar 
-    className='cursor-pointer'
-    onClick={()=>{
-      setMorelog(!moreLog)
-    }}
-   
-    />
+
+
+<Avatar
+  className='cursor-pointer
+
+  
+  '
+  onClick={()=>{
+    setMorelog(!moreLog)
+  }}
+ 
+>
+<span
+className='
+
+text-primaryBlue
+font-bold
+
+'
+>
+{(selectUserData?.userName) && (selectUserData?.userName)[0]}
+</span>
+
+
+</Avatar>
 
 
 {moreLog &&
@@ -384,13 +416,15 @@ let originalDate=(date.toLocaleString())
     
     <Link
     to={`/history/${selectUserData?.userid}`}
+    onClick={()=>{
+      setMorelog(!moreLog)
+    }}
+
     >
       <HistoryIcon/> <span
       className='cursor-pointer'
       
-      onClick={()=>{
-        setMorelog(!moreLog)
-      }}
+      
       >History</span></Link>
     </div>}
    </div>
@@ -534,9 +568,18 @@ let originalDate=(date.toLocaleString())
       top-[5px]
       cursor-pointer
       '
-   onClick={handleMic}
+   onClick={()=>{
+    handleMic()
+  
+  SpeechRecognition.stopListening()
+    resetTranscript()
+  }}
+
       >
-      <ClearIcon/>
+      <ClearIcon
+      
+      
+      />
 
         </div>
 

@@ -26,7 +26,7 @@ const Videos = ({videos,direction,noScale}) => {
             return(
             <div key={items?.snippet?.publishTime}
             className={`border
-            h-[275px]
+            h-[285px]
             w-[309px]
             mt-[15px]
             cursor-pointer
@@ -123,9 +123,11 @@ VChtitle={ items?.snippet?.channelTitle}
                  
 
                   <span
-                  className='text-white'
+                  className='text-white
+                  capitalize
+                  '
                   >
-                    {(items?.snippet?.title.slice(0,65))}
+                    {(items?.snippet?.title.slice(0,60))}
                     
                   </span>
 

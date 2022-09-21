@@ -50,43 +50,61 @@ let selectUserData=useSelector(state=>state?.info?.usersData)
         })
 
       }
+
+
+      console.log(videoDetail)
   return (
     <div
     className='bg-primaryBlack
-    
     flex
     justify-between
+    mt-[2px]
+    
+    md:flex-row
+    flex-col
     '
     >
         {/* {id} */}
+        {/* w-[calc(100%-30rem)] */}
+
         <div
         className='
-       border
-       w-[70%]
+       
+       md:w-[calc(100%-375px)]
+       w-[95%]
+     
 
         '
        
 
         >
-          <span
-          
-          >
-    <ReactPlayer 
-    onStart={handleStart}
+
+<div
+        className='w-[100%]
+        border
+        
+        '
+
+       
+    
+    > 
+      <ReactPlayer 
+    
     url={`www.youtube.com/watch?v=${id}`}
 
     controls
-    className='
-    min-w-[95%]
-    bg-primaryRed
-       '
+   
 
       //  onClickPreview={handelClick}
       
+      onStart={handleStart}
+
+    width='100%'
 
        
     />
-    </span>
+
+    </div>
     <div 
     className='text-white'
     >
@@ -162,9 +180,10 @@ let selectUserData=useSelector(state=>state?.info?.usersData)
     </div>
   <div
   className='
-  h-[95vh]
-  overflow-y-scroll
-  w-[30%]
+  min-w-[315px]
+  
+  flex
+  justify-center
   '
   >
 

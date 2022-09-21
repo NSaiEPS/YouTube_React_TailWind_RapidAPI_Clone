@@ -29,34 +29,85 @@ const SearchHistory = ({searchId,search,originalDate}) => {
     // console.log(reqDate)
   let reqDateCal=()=>{
     let reqDatepost=originalDate.split('/')[0]
+    let reqMonthpost=originalDate.split('/')[1]
+    let reqYearpost=originalDate.split('/')[2].split(',')[0]
     let date=new Date()
     let getReqDate=date.toLocaleDateString().split('/')[0]
-    // console.log(getReqDate)
+    let getReqMonth=date.toLocaleDateString().split('/')[1]
+    let getReqYear=date.toLocaleDateString().split('/')[2]
+    // console.log(getReqDate - reqDatepost ===1)
 
-    if(reqDatepost===getReqDate){
-        return 'today at '
-    }
-     
-    if(reqDatepost-1 === getReqDate){
-        return  'one day back'
-    }
+    if(getReqYear===reqYearpost){
+        // Same year
+        if(getReqMonth=== reqMonthpost){
+            // same month
 
-    if(reqDatepost-getReqDate > 365){
+            if(getReqDate===reqDatepost){
+                return 'today '
+            }
 
-        return  'years back'
+            else {
+
+                if( getReqDate- reqDatepost ===1 ){
+                    return 'yesterday '
+                }
+
+                else {
+                    return `${getReqDate - reqDatepost} days back`
+                }
+            }
+        }
+
+        else {
+            if( getReqMonth- reqMonthpost=== 1) {
+            return 'last month'}
+
+            else {
+                return `${getReqMonth- reqMonthpost} months back`
+            }
+        }
     }
 
     else {
-           
-        if(reqDatepost-getReqDate >35){
-            return 'months back'
+        // Different year
+        if(getReqYear ===reqYearpost -1){
+            return 'a year back'
         }
-
-        if( (reqDatepost-getReqDate <35)  )
-
-        return `${reqDatepost-getReqDate} days back`
-
+        else return `${getReqYear-reqYearpost } years back`
     }
+
+
+
+
+
+
+    // if(reqDatepost===getReqDate){
+    //     return 'today at '
+    // }
+     
+    // if(reqDatepost + 1 === getReqDate){
+    //     return  'one day back'
+    // }
+
+
+    
+
+    // if(reqDatepost-getReqDate > 365){
+
+    //     return  'years back'
+    // }
+
+    // else {
+           
+    //     if(reqDatepost-getReqDate >35){
+    //         return 'months back'
+    //     }
+
+    //     if( (reqDatepost-getReqDate <35)  )
+
+    //     return `${getReqDate - reqDatepost} days back`
+
+    // }
 
 
   }
@@ -65,7 +116,9 @@ const SearchHistory = ({searchId,search,originalDate}) => {
   
   return (
     <div
-    className='flex'
+    className='flex
+    pt-[7px]
+    '
     >
         <div
         className='w-[33%]'
@@ -77,13 +130,17 @@ const SearchHistory = ({searchId,search,originalDate}) => {
         className='w-[33%]'
 
         
-        >{reqDateCal()}  {originalDate.split(',')[1]}</div>
+        >{reqDateCal()} at {originalDate.split(',')[1]}
+        
+        </div>
         
 
         <div
         className='w-[33%]
         cursor-pointer
         text-primaryRed
+        flex
+        justify-end
 
         '
         
