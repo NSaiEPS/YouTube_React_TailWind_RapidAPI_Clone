@@ -20,7 +20,9 @@ const SearchedVideos = () => {
 
   return (
     <div
-    className='bg-primaryBlack'
+    className='bg-primaryBlack
+    overflow-x-hidden
+    '
     >
        <Videos videos={videos}/>
     </div>

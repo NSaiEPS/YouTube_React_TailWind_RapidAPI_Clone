@@ -61,15 +61,20 @@ useEffect(()=>{
 
 
  
-let watchedList=[]
-let reqwatchId=''
+
+const [watchList, setwatchList] = useState([])
+const [watchId, setwatchId] = useState('')
 
 useEffect(()=>{
-  watchHistory.forEach((item)=>{
+  watchHistory.map((item)=>{
     console.log(item.data.watchedVideoid)
-    watchedList.push(item.data.watchedVideoid)
-    if(item.data.watchedVideoid===id){
-      reqwatchId=item.id
+    let items=item.data.watchedVideoid
+    setwatchList([
+      ...watchList,items]
+    )
+    if(items===id){
+     let reqwatchId=item.id
+      setwatchId(reqwatchId)
     }
   })
 
@@ -77,7 +82,7 @@ useEffect(()=>{
 
 
 
-// console.log(watchedList,watchHistory,reqwatchId)
+console.log(watchId,watchList)
 
 
 
@@ -95,8 +100,9 @@ useEffect(()=>{
         let date=new Date
         let originalDate=(date.toLocaleString())
 
-         if(watchedList.includes(id)){
-          db.collection('users').doc(selectUserData?.userid).collection('watchHistory').doc(reqwatchId).update({
+        //  if(watchList.includes(id)){
+          if(watchId){
+          db.collection('users').doc(selectUserData?.userid).collection('watchHistory').doc(watchId).update({
             originalDate
           })
 
@@ -111,7 +117,7 @@ useEffect(()=>{
       }
 
 
-      console.log(videoDetail)
+      // console.log(videoDetail)
 
 
 
@@ -185,7 +191,10 @@ useEffect(()=>{
   >
       <span
       className='p-[4px]'
-      >        {videoDetail?.statistics?.viewCount} views
+      >        {(videoDetail?.statistics?.viewCount)
+      
+      
+      } views
 </span> 
 
       <span

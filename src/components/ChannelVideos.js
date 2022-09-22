@@ -22,7 +22,7 @@ const ChannelVideos = () => {
   },[id])
   let reqdate= (channelDetail?.snippet?.publishedAt) && (channelDetail?.snippet?.publishedAt).split('T')[0]
 
-  console.log(channelDetail)
+  console.log(channelDetail, 'channel')
   
   // console.log(channelDetail?.snippet?.thumbnails?.medium?.url)
   return (

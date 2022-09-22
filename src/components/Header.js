@@ -12,6 +12,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import { auth, db } from '../Firebase';
 import { useSelector } from 'react-redux';
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
+import Header_InputHistory from '../Header_InputHistory';
 
 const Header = ({setsidebarOpen}) => {
 
@@ -196,7 +197,7 @@ let originalDate=(date.toLocaleString())
   }
 
 let [handleSearchHistory,setHandleSearchHistory]=useState(false)
- 
+ const [clike, setclike] = useState(false)
 // let selectUserData=useSelector(state=>state?.info?.usersData)
 const [searchHistory, setsearchHistory] = useState([])
 
@@ -204,14 +205,16 @@ useEffect(()=>{
 
 
 
-db.collection('users').doc(selectUserData?.userid).collection('searchHistory').orderBy('originalDate').onSnapshot((data)=>{
+db.collection('users').doc(selectUserData?.userid).collection('searchHistory').orderBy('originalDate','desc').onSnapshot((data)=>{
   setsearchHistory((data.docs.map((item)=>({
     id:item.id,
     data:item.data()
   }))))
  })
-},[])
+},[handleSearchHistory])
 
+
+// console.log(searchHistory,selectUserData?.userid)
 
 
 
@@ -302,6 +305,7 @@ return (
           ()=>
             setHandleSearchHistory(false)
           }
+          autoComplete='off'
       
       />
       {
@@ -366,15 +370,23 @@ return (
 
 
 {
-  true &&
+  (handleSearchHistory || clike)
+ 
+  
+  &&
 
   <div
+
   className='
   w-[100%]
   border
   absolute
   top-[38px]
   left-[0px]
+  max-h-[65vh]
+  overflow-y-auto
+  xs:block
+  hidden
   
   '
   
@@ -384,15 +396,34 @@ return (
         return(
          <div
          key={index}
-         className='bg-primaryBlue
+         className='bg-primaryBlack
+         p-[5px]
          
          '
-         
-         >{
-          items.data.search
-          }
 
-<AutoDeleteIcon/>
+        //  onTouchStart={()=>{
+        //   setclike(true)
+        //  }}
+        //  onTouchCancel={()=>
+        //   setclike(false)
+
+        // }
+        onMouseEnter={
+          ()=>setclike(true)
+        }
+        onMouseLeave={
+          ()=>setclike(false)
+        }
+         
+         >
+          
+   
+
+<Header_InputHistory
+id={items.id}
+search={items.data.search}
+index
+/>
           </div>
 
         )
@@ -549,23 +580,7 @@ font-bold
           className='pl-[5px]'
           >
             
-            {/* {Languages.map((item,index)=>(
-              <select
-              key={index}
-              name={item}
-              onClick={
-                ()=>{
-                  handleLanguage(item)
-                }
-              }
-              >
-                <option>
-                {item}
-
-              </option>
-              </select>
-
-            ))} */}
+        
 
 <select onChange={handleLanguage}>
 {Languages.map((item,index)=>(
@@ -739,8 +754,17 @@ justify-around
       }}
     onKeyDown={handleInputKeyPress}
 
+    onFocus={
+      ()=>
+        setHandleSearchHistory(true)
+      }
 
+      onBlur={
+        ()=>
+          setHandleSearchHistory(false)
+        }
       
+        autoComplete='off'
       />
       {input.text &&
 
@@ -764,6 +788,66 @@ onClick={
 
       </span>
 
+      {
+  (handleSearchHistory || clike)
+  
+  &&
+
+  <div
+
+  className='
+  w-[100%]
+  
+  absolute
+  top-[75px]
+  left-[0px]
+  max-h-[65vh]
+  overflow-y-auto
+  
+  
+  '
+  
+  >
+    {
+      searchHistory.map((items,index)=>{
+        return(
+         <div
+         key={index}
+         className='bg-primaryBlack
+         p-[5px]
+         
+         '
+
+        //  onTouchStart={()=>{
+        //   setclike(true)
+        //  }}
+        //  onTouchCancel={()=>
+        //   setclike(false)
+
+        // }
+        onMouseEnter={
+          ()=>setclike(true)
+        }
+        onMouseLeave={
+          ()=>setclike(false)
+        }
+         
+         >
+          
+   
+
+<Header_InputHistory
+id={items.id}
+search={items.data.search}
+index
+/>
+          </div>
+
+        )
+      })
+    }
+  </div>
+}
 
 
 </div>
