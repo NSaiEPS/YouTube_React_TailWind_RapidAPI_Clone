@@ -556,9 +556,11 @@ font-bold
    top-[0px]
    left-[0px]
    bg-primaryBlackOpcity
+   
    w-[100%]
    h-[100vh]
-   z-40
+   z-[7]
+   
    
    
 
@@ -590,6 +592,7 @@ font-bold
      relative
      top-[50px]
      pb-[5px]
+     border
      `
     }
     >

@@ -286,7 +286,7 @@ text-white
 animate-bounce
 w-[50px]
 h-[50px]
-z-[6]
+z-[1]
 bg-white
 rounded-full
 '>
