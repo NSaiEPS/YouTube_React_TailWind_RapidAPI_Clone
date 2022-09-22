@@ -10,6 +10,7 @@ const FirstPage = () => {
 
   
   let SelectedName=selectcategoryName?.selectCategory || selectcategoryName?.state?.selectCategory
+  let selectThemeData=useSelector(state=>state?.info?.themeWhite)
 
 const [videos,setVideos]=useState([])
 
@@ -58,7 +59,21 @@ fetchFromAPI(`search?part=snippet&q=${
             </span> Videos
           </h1> 
           <div
-          className='overflow-x-hidden'
+          className={
+            `
+            overflow-x-hidden
+            ${
+              selectThemeData &&
+              'bg-primaryWhite'
+            }
+      duration-1000
+
+          
+            `
+          }
+          
+          
+          
           
           >
 

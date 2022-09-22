@@ -14,7 +14,7 @@ import Signup from './components/Signup';
 import UserHistory from './components/UserHistory';
 import { auth, db } from './Firebase';
 import Spinner from 'react-spinkit'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 // import { Avatar } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -31,6 +31,9 @@ function App() {
   // document.addEventListener('contextmenu', function(e) {
   //   e.preventDefault();
   // });
+
+let selectThemeData=useSelector(state=>state?.info?.themeWhite)
+
   let dispatch=useDispatch()
   const [userss,loading]=useAuthState(auth)
 
@@ -135,11 +138,19 @@ usersData.map((data)=>
  }
 
   return (
-    <div className="
+    <div className={
+      `
+      ${!selectThemeData &&
+      'bg-primaryBlack'
+      }
+
+      duration-1000
+      `
+    }
     
    
-    "
-    id='demo'
+    
+    
     >
 
 

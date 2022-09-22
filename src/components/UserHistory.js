@@ -7,6 +7,7 @@ import WatchHistory from './WatchHistory'
 import 'react-toastify/dist/ReactToastify.css';
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 import { tabsListUnstyledClasses } from '@mui/base'
+import { useSelector } from 'react-redux'
 
 
 const UserHistory = () => {
@@ -15,6 +16,7 @@ const UserHistory = () => {
     const [searchHistory, setsearchHistory] = useState([])
 
     const [history, setHistory] = useState('search')
+    let selectThemeData=useSelector(state=>state?.info?.themeWhite)
 
     useEffect(()=>{
    db.collection('users').doc(id).collection('watchHistory').orderBy('originalDate').onSnapshot((data)=>{
@@ -116,6 +118,7 @@ if (confm) {
         right-[-35px]
         p-[7px]
         text-primaryRed
+
         '
 
         onClick={
@@ -169,7 +172,10 @@ if (confm) {
       
 
      </div>
-     <div>
+     <div
+     
+     
+     >
       {history==='search'?
 
       (searchHistory.length >0 ?
@@ -186,6 +192,8 @@ if (confm) {
      m-auto
      p-[15px]
      mt-[25px]
+     border
+
 
 
       '
@@ -271,6 +279,7 @@ if (confm) {
      mt-[25px]
      sm:w-[750px]
      w-[98%]
+     border
 
 
      '

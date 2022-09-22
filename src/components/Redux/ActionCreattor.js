@@ -1,7 +1,8 @@
 const InitialState=({
     selectCategory:'New',
     name:'',
-    usersData:{}
+    usersData:{},
+    themeWhite:false
     
 })
 
@@ -19,6 +20,13 @@ export default function actionReducer(state=InitialState, action) {
             return{
                 ...state,
                 usersData:action.payload
+            }
+        }
+
+        case 'Themes':{
+            return{
+                ...state,
+                themeWhite:action.payload
             }
         }
 

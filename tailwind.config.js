@@ -13,6 +13,7 @@ module.exports = {
         primaryWhite: "#ffffff",
         primaryRed: "#FF0000",
         primaryGreen:'green',
+        primaryGold:'#ffd700',
         secondary: "#00f6ff",
         pink:'#FF1493',
         dimWhite: "rgba(255, 255, 255, 0.7)",

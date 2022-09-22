@@ -13,6 +13,7 @@ import { auth, db } from '../Firebase';
 import { useSelector } from 'react-redux';
 import AutoDeleteIcon from '@mui/icons-material/AutoDelete';
 import Header_InputHistory from '../Header_InputHistory';
+import Themes from '../Themes';
 
 const Header = ({setsidebarOpen}) => {
 
@@ -38,6 +39,8 @@ const Header = ({setsidebarOpen}) => {
 
 let selectUserData=useSelector(state=>state?.info?.usersData)
 // console.log(selectUserData)
+let selectThemeData=useSelector(state=>state?.info?.themeWhite)
+
  
 
 let handleSubmit=(e)=>{
@@ -227,6 +230,7 @@ return (
         sticky
         top-[0px]
         z-[2]
+        border-b-[1px]
         `
     }
     >
@@ -454,6 +458,24 @@ index
     </span>
 
    </div>
+
+
+
+
+<div
+className='
+w-[60px]
+
+
+
+
+
+'
+>
+<Themes/>
+</div>
+
+
    <div
    className='relative
   
@@ -537,7 +559,7 @@ font-bold
    w-[100%]
    h-[100vh]
    z-40
-
+   
    
 
    
@@ -547,8 +569,19 @@ font-bold
    >
 
     <div
-    className='bg-primaryWhite
-    text-black
+    className={
+      `
+     ${
+      selectThemeData ?
+      `bg-primaryWhite
+      text-black
+      `:
+      `bg-primaryBlack 
+      
+      `
+     }
+
+    
     w-[700px]
    min-h-[400px]
     m-auto
@@ -557,7 +590,8 @@ font-bold
      relative
      top-[50px]
      pb-[5px]
-    '
+     `
+    }
     >
     <div
     className='
@@ -577,7 +611,12 @@ font-bold
           Search with your voice in
           </span>
           <h1
-          className='pl-[5px]'
+          className={`
+          pl-[5px]
+         
+          text-black
+          
+          `}
           >
             
         

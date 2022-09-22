@@ -15,6 +15,8 @@ const WatchVideos = () => {
   const [videos, setVideos] = useState([]);
   let [channelDetail, setChannelDetail]=useState([])
 let selectUserData=useSelector(state=>state?.info?.usersData)
+let selectThemeData=useSelector(state=>state?.info?.themeWhite)
+
 
 
     useEffect(() => {
@@ -125,14 +127,23 @@ console.log(watchId,watchList)
   
   return (
     <div
-    className='bg-primaryBlack
+    className={`
+ 
+    bg-primaryBlack
+    
+    ${selectThemeData &&
+    
+    'bg-primaryWhite'}
+    duration-2000
+
+   
     flex
     justify-between
     mt-[2px]
     
     md:flex-row
     flex-col
-    '
+    `}
     >
         {/* {id} */}
         {/* w-[calc(100%-30rem)] */}
@@ -176,7 +187,17 @@ console.log(watchId,watchList)
 
     </div>
     <div 
-    className='text-white'
+    className={`
+    text-white
+
+    ${
+      selectThemeData &&
+      'text-black'
+    }
+    duration-1000
+
+    
+    `}
     >
       <h1
       className='text-2xl
@@ -213,9 +234,15 @@ console.log(watchId,watchList)
 
 
       <span
-      className='text-dimWhite
+      className={`
+      text-dimWhite
+      ${selectThemeData &&
+      'text-dimBlack'}
+      duration-1000
+
+
       p-[10px]
-      '
+      `}
       >{videoDetail?.snippet?.description}</span>
 
 
