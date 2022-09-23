@@ -69,7 +69,7 @@ const WatchHistory = ({watchedVideoid,watchId,originalDate}) => {
         let getReqDate=date.toLocaleDateString().split('/')[0]
         let getReqMonth=date.toLocaleDateString().split('/')[1]
         let getReqYear=date.toLocaleDateString().split('/')[2]
-        // console.log(getReqDate - reqDatepost ===1)
+        console.log(getReqMonth,reqMonthpost)
     
         if(getReqYear===reqYearpost){
             // Same year
@@ -112,7 +112,7 @@ const WatchHistory = ({watchedVideoid,watchId,originalDate}) => {
     
     }    
 
-
+    reqDateCal()
 
     let handleStart=()=>{
         let date=new Date

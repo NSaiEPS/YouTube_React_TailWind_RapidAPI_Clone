@@ -5,7 +5,7 @@ const Themes = () => {
 
   let dispatch=useDispatch()
 let selectThemeData=useSelector(state=>state?.info?.themeWhite)
-console.log(selectThemeData)
+// console.log(selectThemeData)
 
     let handleDarkTheme=()=>{
         // alert('dark')
