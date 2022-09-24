@@ -37,18 +37,18 @@ const SearchHistory = ({searchId,search,originalDate}) => {
     let getReqYear=date.toLocaleDateString().split('/')[2]
     // console.log(getReqDate - reqDatepost ===1)
 
-    if(getReqYear===reqYearpost){
+    if(parseInt(getReqYear)===parseInt(reqYearpost)){
         // Same year
-        if(getReqMonth=== reqMonthpost){
+        if(parseInt(getReqMonth)=== parseInt(reqMonthpost)){
             // same month
 
-            if(getReqDate===reqDatepost){
+            if(parseInt(getReqDate)===parseInt(reqDatepost)){
                 return 'today '
             }
 
             else {
 
-                if( getReqDate- reqDatepost ===1 ){
+                if( parseInt(getReqDate)- parseInt(reqDatepost) ===1 ){
                     return 'yesterday '
                 }
 
@@ -59,7 +59,7 @@ const SearchHistory = ({searchId,search,originalDate}) => {
         }
 
         else {
-            if( getReqMonth- reqMonthpost=== 1) {
+            if( parseInt(getReqMonth)- parseInt(reqMonthpost)=== 1) {
             return 'last month'}
 
             else {
@@ -70,7 +70,7 @@ const SearchHistory = ({searchId,search,originalDate}) => {
 
     else {
         // Different year
-        if(getReqYear ===reqYearpost -1){
+        if(parseInt(getReqYear) ===parseInt(reqYearpost) -1){
             return 'a year back'
         }
         else return `${getReqYear-reqYearpost } years back`
