@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import VideoCard from './VideoCard';
 
-const Videos = ({videos,direction,noScale}) => {
+const Videos = ({videos,direction,noScale,watchVideos}) => {
 
   return (
     <div
@@ -18,7 +18,7 @@ const Videos = ({videos,direction,noScale}) => {
     `}
     >
 
-        {videos.map((items)=>{
+        {videos.map((items,index)=>{
             let reqdate=(items?.snippet?.publishTime).split('T')[0]
           //  console.log(items)
           
@@ -28,11 +28,16 @@ const Videos = ({videos,direction,noScale}) => {
             className={`border
             h-[285px]
             w-[309px]
-            mt-[15px]
+            
             cursor-pointer
             ${!noScale  && 
             
             'hover:scale-125'}
+
+            ${ (watchVideos &&
+            index===0) ?'mt-[0px]':'mt-[15px]'
+            }
+
     
     duration-1000
     

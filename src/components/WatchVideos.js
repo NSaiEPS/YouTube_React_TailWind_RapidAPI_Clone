@@ -69,7 +69,7 @@ const [watchId, setwatchId] = useState('')
 
 useEffect(()=>{
   watchHistory.map((item)=>{
-    console.log(item.data.watchedVideoid)
+    // console.log(item.data.watchedVideoid)
     let items=item.data.watchedVideoid
     setwatchList([
       ...watchList,items]
@@ -84,7 +84,7 @@ useEffect(()=>{
 
 
 
-console.log(watchId,watchList)
+// console.log(watchId,watchList)
 
 
 
@@ -122,8 +122,19 @@ console.log(watchId,watchList)
       // console.log(videoDetail)
 
 
+   
+      let [readMore,setReadMore]=useState(false)
 
 
+
+ useEffect(()=>{
+  setReadMore(false)
+
+ },[id])
+
+  let handleMoredescription=()=>{
+    setReadMore(!readMore)
+  }
   
   return (
     <div
@@ -138,10 +149,11 @@ console.log(watchId,watchList)
 
    
     flex
-    justify-between
-    mt-[2px]
+    justify-around
+    mt-[15px]
     
     md:flex-row
+
     flex-col
     `}
     >
@@ -153,6 +165,9 @@ console.log(watchId,watchList)
        
        md:w-[calc(100%-375px)]
        w-[95%]
+    m-auto
+    md:m-[1px]
+
      
 
         '
@@ -181,6 +196,7 @@ console.log(watchId,watchList)
       onStart={handleStart}
 
     width='100%'
+    height='450px'
 
        
     />
@@ -243,7 +259,44 @@ console.log(watchId,watchList)
 
       p-[10px]
       `}
-      >{videoDetail?.snippet?.description}</span>
+      >
+
+      { !readMore ?
+      
+      videoDetail?.snippet?.description.slice(0,100)
+      :
+
+        
+        (videoDetail?.snippet?.description)
+
+      }
+
+      {
+        !readMore && '...' 
+      }
+
+      {
+        <button
+        onClick={handleMoredescription}
+        className={`
+        font-bold
+        ${readMore &&
+        'ml-[10px]'}
+
+        `}
+        >
+          {
+            readMore? 'show less':
+            'show more'
+          }
+        </button>
+      }
+
+
+
+   
+        
+        </span>
 
 
 </div>
@@ -301,6 +354,7 @@ console.log(watchId,watchList)
     videos={videos}
     direction='column'
     noScale={true}
+    watchVideos={true}
     />
   </div>
 
